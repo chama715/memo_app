@@ -7,6 +7,8 @@
 
 import SwiftUI
 //UIを作るためのライブラリ
+//ここの画面がメインになるのかな
+
 
 struct ContentView: View {
     //メイン画面の定義
