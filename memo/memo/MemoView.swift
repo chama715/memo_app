@@ -14,7 +14,7 @@ class MemoViewModel: ObservableObject {
     //メモの一覧を保持する配列。@Publisedをつけると内容が変わったら自動更新される
     
     func addMemo(title: String, body: String) {
-        //新しいメモを作って追加する関数。
+        //新しいメモを作って追加する関数。。
         let newMemo = Memo(id: UUID(), title: title, body: body, date: Date())
         //メモを作成して・・・
         memos.append(newMemo)
