@@ -6,42 +6,50 @@
 //
 
 import SwiftUI
-//UIを作るためのライブラリ
-//ここの画面がメインになるのかな
-
+// UIを作るためのライブラリ
+// ここの画面がメインになる
 
 struct ContentView: View {
-    //メイン画面の定義
+    // メイン画面の定義
     @StateObject var viewModel = MemoViewModel()
-    //ViewModelを作成して監視状態にする。@StateObjectなのでこのViewが持ち主
+    // ViewModelを作成して監視状態にする。このViewが持ち主
+    @State private var isPresentingAddMemo = false
+    // sheet表示のトリガー
 
     var body: some View {
         NavigationView {
-            //画面にナビゲーションバーをつけるためのコンテナ
-            List(viewModel.memos) { memo in
-                //ViewModelのメモ配列をリスト表示する
-                VStack(alignment: .leading) {
-                    Text(memo.title).font(.headline)
-                    Text(memo.body).font(.subheadline).lineLimit(1)
-                    //メモの中身を縦型に表示
+            // 画面にナビゲーションバーをつけるためのコンテナ
+            List {
+                ForEach(viewModel.memos) { memo in
+                    // ViewModelのメモ配列をリスト表示する
+                    VStack(alignment: .leading) {
+                        Text(memo.title).font(.headline)
+                        Text(memo.body).font(.subheadline).lineLimit(1)
+                        // メモの中身を縦型に表示
+                    }
                 }
+                .onDelete(perform: viewModel.deleteMemo)
+                // スワイプで削除できるようにする
             }
             .navigationTitle("メモ一覧")
-            //ナビゲーションバーに表示するタイトル
+            // ナビゲーションバーに表示するタイトル
             .toolbar {
                 Button(action: {
-                    viewModel.addMemo(title: "タイトル", body: "本文")
-                    //右上の＋ボタンで、メモを1件追加
+                    isPresentingAddMemo = true
                 }) {
                     Image(systemName: "plus")
                 }
+                // SF Symbolsの＋アイコン。タップでsheetを表示
+            }
+            .sheet(isPresented: $isPresentingAddMemo) {
+                AddMemoView(viewModel: viewModel)
+                // sheetとしてAddMemoViewを表示
             }
         }
     }
 }
-//SF SymbolsというApple純正のアイコン
 
 #Preview {
     ContentView()
 }
-//プレビュー画面でこの画面が見られる
+// プレビュー画面でこの画面が見られる
