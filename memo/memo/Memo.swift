@@ -7,11 +7,12 @@
 
 import Foundation
 //Swiftの基本機能を使うためのライブラリ。SwiftUIじゃないんだ？
+//UUID、Date、Codableの機能を使うため
 
 struct Memo: Identifiable, Codable {
     //Memo構造体を定義
     //Identifiableはプロトコルの1つで、自分のIDを持っているよ、という意味を持つ。Listに必要
-    //Codableもプロトコルの1つ。保存したり読み込んだりできるよ！の意味
+    //Codableもプロトコルの1つ。保存したり読み込んだりできるよ！の意味。JSONに変換したりする。
     //Viewみたいなノリで、IdentifiableとCodebleを定義している。
     let id: UUID
     //各メモを一意に識別するためのID。自動で生成される。
